@@ -45,12 +45,10 @@ app.post('/api/notes', function(req, res) {
   
   });
 
- 
-
 
 // DATA
 // =============================================================
-const db = [{"title":"Test Title","text":"Test text"}]
+const db = [];
 
 
 // Starts the server to begin listening
