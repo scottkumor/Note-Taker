@@ -2,6 +2,8 @@
 // ===========================================================
 var express = require("express");
 var path = require("path");
+const db = require("./public/assets/js/db");
+const fs = require('fs');
 
 var app = express();
 var PORT = 8080;
@@ -19,41 +21,32 @@ app.use(express.static('public'));
 
 // Displays all characters
 
-app.get('/notes', function(req, res) {
+app.get('/notes', function (req, res) {
   res.sendFile(path.join(__dirname, './public/notes.html'))
-  
+
 });
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, './public/index.html'))
 });
 
 
-app.get('/api/notes', function(req, res) {
+app.get('/api/notes', function (req, res) {
   return res.json(db);
 });
 
-
-// Create New tables - takes in JSON input
-app.post('/api/notes', function(req, res) {
+app.post('/api/notes', function (req, res) {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
-  var newNote = req.body;
+  db.push(req.body)
+  res.json(true)
 
-  db.push(newNote);
-
-  res.json(newNote);
-  
-  });
+});
 
 
-// DATA
-// =============================================================
-const db = [];
 
 
 // Starts the server to begin listening
 // =============================================================
-app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
-  
+app.listen(PORT, function () {
+  console.log("App listening on PORT " + PORT);
+});
