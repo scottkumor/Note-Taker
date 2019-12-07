@@ -1,47 +1,30 @@
 // Dependencies
 // ===========================================================
-var express = require("express");
-var path = require("path");
-const db = require("./public/assets/js/db");
+const router = require('express').Router();
+const apiRoutes = require("./routes/apiRoutes");
+const htmlRoutes = require("./routes/htmlRoutes");
+const express = require("express");
+const path = require("path");
 const fs = require('fs');
-
-var app = express();
-var PORT = 8080;
-
-
+const util = require('util');
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // set up the express app to handle data parsing
-app.use(express.urlencoded({ extend: true }));
 app.use(express.json());
+app.use(express.urlencoded({ extend: true }));
+
 app.use(express.static('public'));
 
 // Routes
 // ===========================================================
 // general route
 
-// Displays all characters
 
-app.get('/notes', function (req, res) {
-  res.sendFile(path.join(__dirname, './public/notes.html'))
-
-});
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, './public/index.html'))
-});
-
-
-app.get('/api/notes', function (req, res) {
-  return res.json(db);
-});
-
-app.post('/api/notes', function (req, res) {
-  // req.body hosts is equal to the JSON post sent from the user
-  // This works because of our body parsing middleware
-  db.push(req.body)
-  res.json(true)
-
-});
-
+app.use("/api", apiRoutes);
+app.use("/", htmlRoutes);
 
 
 
