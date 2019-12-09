@@ -23,8 +23,10 @@ app.use(express.static('public'));
 // general route
 
 
+
 app.use("/api", apiRoutes);
 app.use("/", htmlRoutes);
+
 
 
 

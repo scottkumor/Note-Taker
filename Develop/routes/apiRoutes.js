@@ -26,22 +26,41 @@ router.post('/notes', (req, res) => {
     res.send('post sent');
 });
 
-router.delete(`/notes/:id`, (req, res) => {
-  // set a global array that manages notes, add/remove from it/  
-  //hit his the get route, user the array to splice and then re-write IN HERE
-  fs.readFile(__dirname + './../db/db.json', (err,data)  => {
-    /* convert json data to array */
-    let notes = JSON.parse(data);
-    
-    //  mgr.push(notes)
-       console.log(notes);
+// router.delete(`/notes/:id`, (req, res) => {
+//   // set a global array that manages notes, add/remove from it/  
+//   //hit his the get route, user the array to splice and then re-write IN HERE
+//   fs.readFile(__dirname + './../db/db.json', (err,data)  => {
+//     /* convert json data to array */
+//     let thisId = req.params
+//      let notes = JSON.parse(data);
+//      for (i = 0; i < notes.length; i++) {
+//        if(thisId === notes[i].id){
+//         notes.splice(thisId, 1)
+//         console.log('notes re-written');
+//         // fs.writeFile(__dirname + './../db/db.json', JSON.stringify(notes), (err) => {
+//         //   if (err) throw err;
+          
+//         // });
+//        }
+//      }
+//   });
+// });
 
-    //    fs.writeFile(__dirname + './../db/db.json', JSON.stringify(mgr), (err) => {
-    //   if (err) throw err;
-    //   console.log('notes re-written');
-    // });
-  });
-  // res.send('delete sent');
+// API Route to Delete
+router.delete("/notes/:id", (req, res) => {
+  fs.readFile(__dirname + './../db/db.json', (err, data) => {
+    let  i = req.params.id;
+    let mgr =  data.toString()
+    console.log(mgr);
+      // data.map(x => {
+       
+      //   // x.splice(i, 1);
+      
+      //   // return x.id;
+      // })
+      // .indexOf(i)
+  
+   });
 });
 
 module.exports = router;
